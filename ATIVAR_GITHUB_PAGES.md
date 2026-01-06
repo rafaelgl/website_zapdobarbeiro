@@ -7,7 +7,7 @@ O repositório está configurado e os arquivos estão no GitHub, mas o **GitHub 
 ## ✅ Solução: Ativar GitHub Pages (2 minutos)
 
 ### Passo 1: Acessar Configurações
-1. Acesse: https://github.com/rafaelgl/Website_Zapdobarbeiro
+1. Acesse: https://github.com/rafaelgl/website_zapdobarbeiro
 2. Clique na aba **Settings** (Configurações) no topo do repositório
 
 ### Passo 2: Ativar Pages
@@ -24,7 +24,7 @@ O repositório está configurado e os arquivos estão no GitHub, mas o **GitHub 
 ### Passo 4: Aguardar Publicação
 - Aguarde 1-2 minutos
 - Você verá uma mensagem verde indicando que o site foi publicado
-- A URL do seu site será: `https://rafaelgl.github.io/Website_Zapdobarbeiro/`
+- A URL do seu site será: `https://rafaelgl.github.io/website_zapdobarbeiro/`
 
 ## 📸 Visual Guide
 
@@ -40,7 +40,7 @@ GitHub Repositório
 
 Após ativar, você pode verificar:
 - **Status**: Aparecerá uma mensagem verde "Your site is live at..."
-- **URL**: `https://rafaelgl.github.io/Website_Zapdobarbeiro/`
+- **URL**: `https://rafaelgl.github.io/website_zapdobarbeiro/`
 - **Tempo**: Geralmente leva 1-2 minutos para ficar disponível
 
 ## ❓ Problemas Comuns
@@ -65,12 +65,12 @@ Após ativar, você pode verificar:
 - [ ] Configurei Source como Branch "main" e Folder "/ (root)"
 - [ ] Cliquei em Save
 - [ ] Aguardei 1-2 minutos
-- [ ] Acessei https://rafaelgl.github.io/Website_Zapdobarbeiro/
+- [ ] Acessei https://rafaelgl.github.io/website_zapdobarbeiro/
 
 ## 🎉 Após Ativar
 
 Seu site estará disponível em:
-**https://rafaelgl.github.io/Website_Zapdobarbeiro/**
+**https://rafaelgl.github.io/website_zapdobarbeiro/**
 
 A página mostrará:
 - ✨ Design moderno com gradiente roxo/azul
