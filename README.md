@@ -4,18 +4,49 @@ Website oficial do Zap do Barbeiro - O Assistente de Barbearia mais inteligente 
 
 ## 🚀 Como hospedar no GitHub Pages
 
-1. Faça o commit e push dos arquivos para o repositório:
-```bash
-git add .
-git commit -m "Initial commit - Landing page"
-git push origin main
+### Opção 1: Usando o script PowerShell (Recomendado)
+
+1. Execute o script de configuração:
+```powershell
+.\setup-github.ps1
 ```
 
-2. No GitHub, vá em **Settings** > **Pages**
-3. Em **Source**, selecione a branch **main** e a pasta **/ (root)**
-4. Clique em **Save**
-5. Aguarde alguns minutos e seu site estará disponível em:
-   `https://seu-usuario.github.io/Website_Zapdobarbeiro/`
+2. Siga as instruções na tela para conectar ao seu repositório GitHub
+
+3. Faça o push dos arquivos:
+```bash
+git push -u origin main
+```
+
+### Opção 2: Configuração Manual
+
+1. **Crie o repositório no GitHub:**
+   - Acesse https://github.com/new
+   - Nome: `Website_Zapdobarbeiro` (ou outro nome de sua escolha)
+   - Público ou Privado
+   - Não inicialize com README, .gitignore ou license
+
+2. **Conecte o repositório local ao GitHub:**
+```bash
+git remote add origin https://github.com/SEU-USUARIO/Website_Zapdobarbeiro.git
+git branch -M main
+git push -u origin main
+```
+
+3. **Ative o GitHub Pages:**
+   - No GitHub, vá em **Settings** > **Pages**
+   - Em **Source**, selecione a branch **main** e a pasta **/ (root)**
+   - Clique em **Save**
+
+4. **Aguarde alguns minutos** e seu site estará disponível em:
+   `https://SEU-USUARIO.github.io/Website_Zapdobarbeiro/`
+
+### Status Atual
+
+✅ Repositório Git inicializado  
+✅ Arquivos commitados  
+✅ Branch renomeada para `main`  
+⏳ Aguardando conexão com GitHub remoto
 
 ## 📁 Estrutura do Projeto
 
