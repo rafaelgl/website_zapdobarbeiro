@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zap do Barbeiro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -496,6 +497,33 @@
             }
         }
 
+        // ============================================
+        // CONFIGURAÇÃO DO FORMULÁRIO DE CONTATO
+        // ============================================
+        // Escolha UMA das opções abaixo:
+        // 
+        // OPÇÃO 1: Formspree (Recomendado - Mais Simples)
+        // 1. Criar conta em https://formspree.io/
+        // 2. Criar um novo formulário
+        // 3. Copiar o Form ID (ex: xpzgkqyz)
+        // 4. Substituir 'YOUR_FORM_ID' abaixo pelo seu Form ID
+        const FORMSPREE_FORM_ID = 'YOUR_FORM_ID';
+        
+        // OPÇÃO 2: EmailJS (Alternativa)
+        // 1. Criar conta em https://www.emailjs.com/
+        // 2. Configurar serviço de email e template
+        // 3. Substituir as credenciais abaixo
+        const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+        const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+        const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+        
+        // Inicializar EmailJS se configurado
+        (function() {
+            if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+                emailjs.init(EMAILJS_PUBLIC_KEY);
+            }
+        })();
+
         function enviarEmail(event) {
             event.preventDefault();
             
@@ -514,50 +542,125 @@
             btnTexto.classList.add('hidden');
             btnLoading.classList.remove('hidden');
             
-            // Preparar email usando mailto:
-            const assunto = encodeURIComponent('Contato - Zap do Barbeiro');
-            const corpo = encodeURIComponent(`Nome: ${nome}\nEmail: ${email}\n\nMensagem:\n${mensagem}`);
-            const mailtoLink = `mailto:suporte@zapdobarbeiro.com.br?subject=${assunto}&body=${corpo}`;
+            // Tentar Formspree primeiro (mais simples)
+            if (FORMSPREE_FORM_ID !== 'YOUR_FORM_ID') {
+                enviarViaFormspree(nome, email, mensagem, btnEnviar, btnTexto, btnLoading, form);
+                return;
+            }
             
-            // Abrir cliente de email
-            window.location.href = mailtoLink;
+            // Tentar EmailJS se Formspree não estiver configurado
+            if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY' && EMAILJS_SERVICE_ID !== 'YOUR_SERVICE_ID' && EMAILJS_TEMPLATE_ID !== 'YOUR_TEMPLATE_ID') {
+                enviarViaEmailJS(nome, email, mensagem, btnEnviar, btnTexto, btnLoading, form);
+                return;
+            }
             
-            // Mostrar mensagem de sucesso
-            setTimeout(() => {
-                alert('Seu cliente de email será aberto. Por favor, envie a mensagem para suporte@zapdobarbeiro.com.br');
-                form.reset();
-                btnEnviar.disabled = false;
-                btnTexto.classList.remove('hidden');
-                btnLoading.classList.add('hidden');
-            }, 500);
+            // Nenhum serviço configurado
+            mostrarMensagemErro('Por favor, configure Formspree ou EmailJS. Veja o arquivo CONFIGURAR_EMAIL.md para instruções.');
+            btnEnviar.disabled = false;
+            btnTexto.classList.remove('hidden');
+            btnLoading.classList.add('hidden');
+        }
+
+        // Enviar via Formspree
+        function enviarViaFormspree(nome, email, mensagem, btnEnviar, btnTexto, btnLoading, form) {
+            const formData = new FormData();
+            formData.append('name', nome);
+            formData.append('email', email);
+            formData.append('message', mensagem);
+            formData.append('_to', 'suporte@zapdobarbeiro.com.br');
+            formData.append('_subject', 'Contato - Zap do Barbeiro');
             
-            /* 
-            ALTERNATIVA: Para usar EmailJS (envio direto sem abrir cliente de email):
-            
-            1. Criar conta em https://www.emailjs.com/ (plano gratuito disponível)
-            2. Configurar um serviço de email (Gmail, Outlook, etc.)
-            3. Criar um template de email
-            4. Substituir o código acima por:
-            
-            emailjs.init("YOUR_PUBLIC_KEY");
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
-                from_name: nome,
-                from_email: email,
-                message: mensagem,
-                to_email: 'suporte@zapdobarbeiro.com.br'
-            }).then(() => {
-                alert('Mensagem enviada com sucesso! Retornaremos em breve.');
-                form.reset();
-                btnEnviar.disabled = false;
-                btnTexto.classList.remove('hidden');
-                btnLoading.classList.add('hidden');
-            }, (error) => {
-                alert('Erro ao enviar. Tente novamente ou envie diretamente para suporte@zapdobarbeiro.com.br');
+            fetch(`https://formspree.io/f/${FORMSPREE_FORM_ID}`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    mostrarMensagemSucesso('Mensagem enviada com sucesso! Retornaremos em breve.');
+                    form.reset();
+                } else {
+                    return response.json().then(data => {
+                        throw new Error(data.error || 'Erro ao enviar');
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Erro Formspree:', error);
+                mostrarMensagemErro('Erro ao enviar mensagem. Tente novamente ou envie para suporte@zapdobarbeiro.com.br');
+            })
+            .finally(() => {
                 btnEnviar.disabled = false;
                 btnTexto.classList.remove('hidden');
                 btnLoading.classList.add('hidden');
             });
-            */
+        }
+
+        // Enviar via EmailJS
+        function enviarViaEmailJS(nome, email, mensagem, btnEnviar, btnTexto, btnLoading, form) {
+            const templateParams = {
+                from_name: nome,
+                from_email: email,
+                message: mensagem,
+                to_email: 'suporte@zapdobarbeiro.com.br',
+                reply_to: email
+            };
+            
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+                .then(function(response) {
+                    mostrarMensagemSucesso('Mensagem enviada com sucesso! Retornaremos em breve.');
+                    form.reset();
+                    btnEnviar.disabled = false;
+                    btnTexto.classList.remove('hidden');
+                    btnLoading.classList.add('hidden');
+                }, function(error) {
+                    console.error('Erro EmailJS:', error);
+                    mostrarMensagemErro('Erro ao enviar mensagem. Tente novamente ou envie para suporte@zapdobarbeiro.com.br');
+                    btnEnviar.disabled = false;
+                    btnTexto.classList.remove('hidden');
+                    btnLoading.classList.add('hidden');
+                });
+        }
+
+        function mostrarMensagemSucesso(mensagem) {
+            // Criar modal de sucesso
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-8 max-w-md w-full relative">
+                    <button onclick="this.closest('.fixed').remove()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">✅</div>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Sucesso!</h3>
+                        <p class="text-slate-600 dark:text-slate-400">${mensagem}</p>
+                        <button onclick="this.closest('.fixed').remove()" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function mostrarMensagemErro(mensagem) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] flex items-center justify-center p-4';
+            modal.innerHTML = `
+                <div class="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-8 max-w-md w-full relative">
+                    <button onclick="this.closest('.fixed').remove()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">⚠️</div>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Atenção</h3>
+                        <p class="text-slate-600 dark:text-slate-400">${mensagem}</p>
+                        <button onclick="this.closest('.fixed').remove()" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition">
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
         }
     </script>
 </body>
