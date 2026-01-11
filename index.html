@@ -1,62 +1,465 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Zap do Barbeiro - O Assistente de Barbearia mais inteligente do mundo">
-    <title>Zap do Barbeiro - Assistente de Barbearia Inteligente</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Zap do Barbeiro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; transition: background-color 0.3s; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="content">
-            <!-- Nome da Empresa -->
-            <div class="logo">
-                <h1>Zap do Barbeiro</h1>
-            </div>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col min-h-screen">
 
-            <!-- Descrição do Serviço -->
-            <div class="service-description">
-                <h2>Vem aí o Assistente de Barbearia mais inteligente do mundo</h2>
-                <p class="description-text">
-                    O Zap do Barbeiro é uma solução completa e inteligente para gestão de barbearias. 
-                    Com tecnologia de ponta, oferecemos ferramentas avançadas para agendamentos, 
-                    controle de clientes, gestão financeira e muito mais. Transforme sua barbearia 
-                    com o assistente mais inteligente do mercado.
-                </p>
+    <nav class="fixed top-0 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showTab('home')">
+                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold">Z</span>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-slate-800 dark:text-white">Zap do Barbeiro</span>
             </div>
+            
+            <div class="flex items-center gap-8">
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#" onclick="showTab('home')" class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition">Início</a>
+                    <a href="#" onclick="showTab('barbeiros')" class="text-sm font-medium hover:text-indigo-600 dark:hover:text-indigo-400 transition">Encontre um Barbeiro</a>
+                    <a href="#" onclick="showTab('login')" class="bg-slate-900 dark:bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition">Painel do Barbeiro</a>
+                </div>
 
-            <!-- Contato -->
-            <div class="contact-section">
-                <h3>Entre em Contato</h3>
-                <p class="contact-info">
-                    <strong>Email:</strong> 
-                    <a href="mailto:suporte@zapdobarbeiro.com.br" class="email-link">
-                        suporte@zapdobarbeiro.com.br
-                    </a>
-                </p>
-            </div>
-
-            <!-- Links Legais -->
-            <div class="legal-links">
-                <a href="politica-privacidade.html" class="legal-link">Política de Privacidade</a>
-                <span class="separator">|</span>
-                <a href="termos-uso.html" class="legal-link">Termos de Uso</a>
-            </div>
-
-            <!-- Animação -->
-            <div class="animation">
-                <div class="scissors">✂️</div>
+                <button onclick="toggleDarkMode()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-yellow-400 hover:bg-slate-200 transition">
+                    <svg id="sun-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path></svg>
+                    <svg id="moon-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                </button>
             </div>
         </div>
-        
-        <footer>
-            <p>&copy; 2024 Zap do Barbeiro. Todos os direitos reservados.</p>
-        </footer>
+    </nav>
+
+    <div class="flex-grow">
+        <main id="home" class="tab-content active pt-32 pb-20">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-indigo-600 dark:text-indigo-400 font-bold tracking-widest text-xs uppercase">Gestão que Funciona</span>
+                    <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white mt-4 leading-tight">
+                        Sua barbearia no <span class="text-indigo-600 dark:text-indigo-400">próximo nível.</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 mt-6 leading-relaxed">
+                        O sistema mais limpo e direto para gerir sua agenda. Deixe que seus clientes marquem horário em segundos, sem complicação ou mensagens infinitas.
+                    </p>
+                    <div class="mt-10 flex gap-4">
+                        <button onclick="showTab('barbeiros')" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:scale-105 transition">
+                            Agendar Agora
+                        </button>
+                        <button onclick="showTab('planos')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 transition">
+                            Conhecer Planos
+                        </button>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-indigo-500/10 rounded-full blur-3xl"></div>
+                    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800" alt="Barbearia" class="relative rounded-3xl shadow-2xl">
+                </div>
+            </div>
+        </main>
+
+        <section id="quem-somos" class="tab-content pt-32 pb-20">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="text-4xl font-extrabold text-slate-900 dark:text-white mb-6">Nossa História</h2>
+                <p class="text-lg text-slate-600 dark:text-slate-400 mb-12">
+                    O Zap do Barbeiro nasceu da necessidade de simplificar a conexão entre profissionais da beleza e seus clientes. Acreditamos que a tecnologia deve ser invisível e eficiente.
+                </p>
+                <div class="grid md:grid-cols-3 gap-8 text-left">
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                        <div class="text-indigo-600 text-3xl mb-4 text-center">🎯</div>
+                        <h4 class="font-bold mb-2">Missão</h4>
+                        <p class="text-sm text-slate-500">Proporcionar ferramentas modernas para que barbeiros foquem no que amam: a arte de cortar.</p>
+                    </div>
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                        <div class="text-indigo-600 text-3xl mb-4">🚀</div>
+                        <h4 class="font-bold mb-2">Visão</h4>
+                        <p class="text-sm text-slate-500">Ser a plataforma de agendamento nº 1 do Brasil, unindo estética e tecnologia de ponta.</p>
+                    </div>
+                    <div class="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                        <div class="text-indigo-600 text-3xl mb-4">💎</div>
+                        <h4 class="font-bold mb-2">Valores</h4>
+                        <p class="text-sm text-slate-500">Simplicidade, transparência, excelência no design e respeito ao tempo do profissional.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="planos" class="tab-content pt-32 pb-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-extrabold text-slate-900 dark:text-white">Planos Simples e Transparentes</h2>
+                    <p class="text-slate-500 mt-4">Tudo o que você precisa para gerir sua barbearia profissionalmente.</p>
+                </div>
+                <div class="max-w-sm mx-auto">
+                    <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] border-2 border-indigo-600 p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold px-4 py-1 rounded-bl-xl uppercase tracking-widest">Mais Popular</div>
+                        <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-2 text-center">Plano Profissional</h3>
+                        <div class="flex items-baseline justify-center gap-1 mb-6">
+                            <span class="text-4xl font-extrabold text-slate-900 dark:text-white">R$ 39,90</span>
+                            <span class="text-slate-500">/mês</span>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                Agenda Online 24h
+                            </li>
+                            <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                Painel de Gestão Financeira
+                            </li>
+                            <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                Cadastro Ilimitado de Clientes
+                            </li>
+                            <li class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+                                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                Suporte via WhatsApp
+                            </li>
+                        </ul>
+                        <button onclick="alert('Redirecionando para checkout...')" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 text-center">
+                            Assinar Agora
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="politicas" class="tab-content pt-32 pb-20">
+            <div class="max-w-3xl mx-auto px-6">
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-8 border-b pb-4 border-slate-100 dark:border-slate-800 text-center">Privacidade e Proteção de Dados (LGPD)</h2>
+                <div class="prose prose-slate dark:prose-invert space-y-6 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p>No <strong>Zap do Barbeiro</strong>, a segurança das suas informações e dos seus clientes é a nossa prioridade absoluta. Atuamos em total conformidade com a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018)</strong>.</p>
+                    
+                    <div class="bg-indigo-50 dark:bg-indigo-900/20 p-6 rounded-2xl border-l-4 border-indigo-600">
+                        <h4 class="font-bold text-indigo-900 dark:text-indigo-400 mb-2">Compromisso com a Segurança</h4>
+                        <p class="text-sm">Utilizamos criptografia de ponta a ponta (SSL) e servidores de alta segurança para garantir que nenhum dado pessoal seja acessado por terceiros não autorizados.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 italic">1. Coleta de Dados</h4>
+                        <p class="text-sm">Coletamos apenas o estritamente necessário para o funcionamento do serviço: nome, telefone e histórico de agendamentos. Nunca vendemos ou compartilhamos esses dados com empresas de marketing.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-slate-800 dark:text-white mb-2 italic">2. Controle do Usuário</h4>
+                        <p class="text-sm">A qualquer momento, o profissional ou o cliente final pode solicitar a exclusão definitiva dos seus dados de nossa base, exercendo seu direito à privacidade.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contato" class="tab-content pt-32 pb-20">
+            <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-6">Fale Conosco</h2>
+                    <p class="text-slate-500 mb-8">Dúvidas sobre o sistema ou precisa de ajuda com sua conta? Nossa equipe está pronta para atender você.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <div class="w-10 h-10 bg-indigo-600/10 text-indigo-600 rounded-lg flex items-center justify-center">📧</div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">E-mail</p>
+                                <p class="text-sm font-semibold">suporte@zapdobarbeiro.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <div class="w-10 h-10 bg-emerald-600/10 text-emerald-600 rounded-lg flex items-center justify-center">💬</div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold">WhatsApp</p>
+                                <p class="text-sm font-semibold">(11) 99999-9999</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
+                    <div class="space-y-4">
+                        <input type="text" placeholder="Nome" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        <input type="email" placeholder="E-mail" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        <textarea placeholder="Como podemos ajudar?" rows="4" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
+                        <button onclick="alert('Mensagem enviada! Retornaremos em breve.')" class="w-full bg-indigo-600 text-white p-4 rounded-2xl font-bold hover:bg-indigo-700 transition">Enviar Mensagem</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="barbeiros" class="tab-content pt-32 pb-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col items-center mb-10 text-center">
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-6">Nossos Barbeiros</h2>
+                    <div class="relative w-full max-w-md">
+                        <input type="text" id="searchBarbeiro" onkeyup="filterBarbeiros()" placeholder="Buscar barbeiro pelo nome..." class="w-full p-4 pl-12 rounded-2xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition shadow-sm text-sm">
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8" id="listaBarbeiros">
+                    <div class="barbeiro-card bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-xl transition group">
+                        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=200" class="w-20 h-20 rounded-2xl object-cover mb-4">
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white barbeiro-nome">Marcos Oliveira</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Especialista em degrade e barba terapia.</p>
+                        <button onclick="openModal('Marcos Oliveira')" class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-3 rounded-xl font-semibold group-hover:bg-indigo-600 group-hover:text-white transition">
+                            Ver Agenda
+                        </button>
+                    </div>
+                    <div class="barbeiro-card bg-white dark:bg-slate-900 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-xl transition group">
+                        <img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?auto=format&fit=crop&q=80&w=200" class="w-20 h-20 rounded-2xl object-cover mb-4">
+                        <h3 class="text-xl font-bold text-slate-800 dark:text-white barbeiro-nome">Ricardo Silva</h3>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Cortes clássicos e tesoura.</p>
+                        <button onclick="openModal('Ricardo Silva')" class="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 py-3 rounded-xl font-semibold group-hover:bg-indigo-600 group-hover:text-white transition">
+                            Ver Agenda
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="login" class="tab-content pt-32 pb-20">
+            <div class="max-w-md mx-auto px-6">
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Acesso Restrito</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Entre com suas credenciais de barbeiro</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">E-mail ou Usuário</label>
+                            <input type="text" id="user" placeholder="admin" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Senha</label>
+                            <input type="password" id="pass" placeholder="123" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        </div>
+                        <button onclick="fazerLogin()" class="w-full bg-slate-900 dark:bg-indigo-600 text-white p-4 rounded-2xl font-bold hover:bg-slate-800 transition mt-4 text-center">
+                            Entrar no Painel
+                        </button>
+                        <div class="text-center mt-4">
+                            <a href="#" onclick="showTab('forgot-password')" class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 transition">Esqueci minha senha</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="forgot-password" class="tab-content pt-32 pb-20">
+            <div class="max-w-md mx-auto px-6">
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
+                    <div class="text-center mb-8">
+                        <h2 class="text-2xl font-bold text-slate-800 dark:text-white">Trocar Senha</h2>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Informe seu e-mail cadastrado para receber as instruções.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">E-mail</label>
+                            <input type="email" placeholder="seuemail@exemplo.com" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        </div>
+                        <button onclick="alert('Instruções enviadas para o seu e-mail!')" class="w-full bg-indigo-600 text-white p-4 rounded-2xl font-bold hover:bg-indigo-700 transition text-center">
+                            Enviar Instruções
+                        </button>
+                        <div class="text-center mt-4">
+                            <a href="#" onclick="showTab('login')" class="text-sm font-medium text-slate-500 hover:text-slate-800 transition text-center">Voltar para o Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="admin" class="tab-content pt-24 pb-20">
+            <div class="max-w-5xl mx-auto px-6 text-left">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+                    <div>
+                        <h1 class="text-3xl font-bold text-slate-900 dark:text-white">Olá, Marcos! 👋</h1>
+                        <p class="text-slate-500 dark:text-slate-400">Aqui está a sua agenda para hoje.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition">Configurar Horários</button>
+                        <button onclick="showTab('home')" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 rounded-xl text-sm font-semibold hover:bg-slate-200 text-center">Sair</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm text-left">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Agendamentos Hoje</p>
+                        <p class="text-3xl font-bold text-slate-800 dark:text-white mt-1">12</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm text-left">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Estimativa de Ganho</p>
+                        <p class="text-3xl font-bold text-emerald-600 mt-1">R$ 540,00</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm text-left">
+                        <p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Horários Livres</p>
+                        <p class="text-3xl font-bold text-indigo-600 dark:text-indigo-400 mt-1">4</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
+                        <h3 class="font-bold text-slate-800 dark:text-white">Próximos Clientes</h3>
+                        <span class="text-xs font-medium bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 px-3 py-1 rounded-full">Atualizado agora</span>
+                    </div>
+                    <div class="divide-y divide-slate-50 dark:divide-slate-800">
+                        <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center font-bold text-slate-500 dark:text-slate-400 text-sm">09:00</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 dark:text-white">João Paulo Rebouças</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Corte Social + Barba</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="text-xs font-bold text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-lg transition">Finalizar</button>
+                                <button class="text-xs font-bold text-rose-500 hover:bg-rose-50 px-3 py-2 rounded-lg transition">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 bg-indigo-600 rounded flex items-center justify-center">
+                            <span class="text-white font-bold text-xs">Z</span>
+                        </div>
+                        <span class="text-lg font-bold tracking-tight text-slate-800 dark:text-white">Zap do Barbeiro</span>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Transformando a gestão de barbearias com tecnologia e simplicidade.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-white mb-4 text-sm uppercase tracking-wider">Plataforma</h4>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="#" onclick="showTab('quem-somos')" class="hover:text-indigo-600 transition">Quem Somos</a></li>
+                        <li><a href="#" onclick="showTab('planos')" class="hover:text-indigo-600 transition">Planos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-white mb-4 text-sm uppercase tracking-wider">Suporte</h4>
+                    <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="#" onclick="showTab('contato')" class="hover:text-indigo-600 transition">Contato</a></li>
+                        <li><a href="#" onclick="showTab('politicas')" class="hover:text-indigo-600 transition">Políticas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-800 dark:text-white mb-4 text-sm uppercase tracking-wider text-left">Frase do Dia</h4>
+                    <p class="text-sm italic text-indigo-600 dark:text-indigo-400 font-medium">"Menos tempo organizando, mais tempo cortando."</p>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-50 dark:border-slate-800 text-center">
+                <p class="text-xs text-slate-400 dark:text-slate-500">&copy; 2024 Zap do Barbeiro. Todos os direitos reservados. Feito com foco em resultados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal-agendamento" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl text-center">&times;</button>
+            <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Agendar com <span id="nome-barbeiro" class="text-indigo-600 dark:text-indigo-400"></span></h1>
+            <p class="text-slate-500 dark:text-slate-400 mb-6 text-sm">Escolha o melhor momento para você.</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 text-left">Seu Nome</label>
+                    <input id="cliente" type="text" placeholder="Digite seu nome completo" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 text-left">Seu Telefone / WhatsApp</label>
+                    <input id="telefone" type="tel" oninput="maskPhone(this)" placeholder="(00) 00000-0000" maxlength="15" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                </div>
+                <div class="grid grid-cols-3 gap-2" id="horarios">
+                    <button onclick="selecionar(this)" class="p-3 text-sm font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-600 transition text-center">09:00</button>
+                    <button onclick="selecionar(this)" class="p-3 text-sm font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-600 transition text-center">10:00</button>
+                    <button onclick="selecionar(this)" class="p-3 text-sm font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-indigo-600 transition text-center">11:00</button>
+                </div>
+                <button onclick="finalizar()" class="w-full mt-6 bg-indigo-600 text-white p-4 rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition text-center">Confirmar Agendamento</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const moon = document.getElementById('moon-icon');
+            const sun = document.getElementById('sun-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                moon.classList.remove('hidden');
+                sun.classList.add('hidden');
+            } else {
+                html.classList.add('dark');
+                moon.classList.add('hidden');
+                sun.classList.remove('hidden');
+            }
+        }
+
+        function openModal(nome) {
+            document.getElementById('nome-barbeiro').innerText = nome;
+            document.getElementById('modal-agendamento').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-agendamento').classList.add('hidden');
+        }
+
+        function fazerLogin() {
+            const u = document.getElementById('user').value;
+            const p = document.getElementById('pass').value;
+            if(u === 'admin' && p === '123') {
+                showTab('admin');
+            } else {
+                alert('Acesso negado!');
+            }
+        }
+
+        function maskPhone(i) {
+            let v = i.value.replace(/\D/g, "");
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+            v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+            i.value = v;
+        }
+
+        function selecionar(btn) {
+            document.querySelectorAll('#horarios button').forEach(b => b.classList.remove('bg-indigo-600', 'text-white'));
+            btn.classList.add('bg-indigo-600', 'text-white');
+        }
+
+        function finalizar() {
+            alert('Agendamento realizado com sucesso!');
+            closeModal();
+        }
+
+        function filterBarbeiros() {
+            const input = document.getElementById('searchBarbeiro').value.toLowerCase();
+            const cards = document.getElementsByClassName('barbeiro-card');
+            
+            for (let i = 0; i < cards.length; i++) {
+                const nome = cards[i].querySelector('.barbeiro-nome').innerText.toLowerCase();
+                if (nome.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 </body>
 </html>
-
