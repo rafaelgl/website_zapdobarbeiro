@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zap do Barbeiro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -171,7 +172,7 @@
                             <div class="w-10 h-10 bg-indigo-600/10 text-indigo-600 rounded-lg flex items-center justify-center">📧</div>
                             <div>
                                 <p class="text-xs text-slate-400 uppercase font-bold">E-mail</p>
-                                <p class="text-sm font-semibold">suporte@zapdobarbeiro.com</p>
+                                <p class="text-sm font-semibold">suporte@zapdobarbeiro.com.br</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800">
@@ -185,12 +186,15 @@
                 </div>
 
                 <div class="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
-                    <div class="space-y-4">
-                        <input type="text" placeholder="Nome" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
-                        <input type="email" placeholder="E-mail" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
-                        <textarea placeholder="Como podemos ajudar?" rows="4" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
-                        <button onclick="alert('Mensagem enviada! Retornaremos em breve.')" class="w-full bg-indigo-600 text-white p-4 rounded-2xl font-bold hover:bg-indigo-700 transition">Enviar Mensagem</button>
-                    </div>
+                    <form id="form-contato" onsubmit="enviarEmail(event)" class="space-y-4">
+                        <input type="text" id="nome-contato" name="nome" placeholder="Nome" required class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        <input type="email" id="email-contato" name="email" placeholder="E-mail" required class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition">
+                        <textarea id="mensagem-contato" name="mensagem" placeholder="Como podemos ajudar?" rows="4" required class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
+                        <button type="submit" id="btn-enviar" class="w-full bg-indigo-600 text-white p-4 rounded-2xl font-bold hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="btn-texto">Enviar Mensagem</span>
+                            <span id="btn-loading" class="hidden">Enviando...</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -491,6 +495,70 @@
                     cards[i].style.display = "none";
                 }
             }
+        }
+
+        function enviarEmail(event) {
+            event.preventDefault();
+            
+            const btnEnviar = document.getElementById('btn-enviar');
+            const btnTexto = document.getElementById('btn-texto');
+            const btnLoading = document.getElementById('btn-loading');
+            const form = document.getElementById('form-contato');
+            
+            // Coletar dados do formulário
+            const nome = document.getElementById('nome-contato').value;
+            const email = document.getElementById('email-contato').value;
+            const mensagem = document.getElementById('mensagem-contato').value;
+            
+            // Desabilitar botão e mostrar loading
+            btnEnviar.disabled = true;
+            btnTexto.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+            
+            // Preparar email usando mailto:
+            const assunto = encodeURIComponent('Contato - Zap do Barbeiro');
+            const corpo = encodeURIComponent(`Nome: ${nome}\nEmail: ${email}\n\nMensagem:\n${mensagem}`);
+            const mailtoLink = `mailto:suporte@zapdobarbeiro.com.br?subject=${assunto}&body=${corpo}`;
+            
+            // Abrir cliente de email
+            window.location.href = mailtoLink;
+            
+            // Mostrar mensagem de sucesso
+            setTimeout(() => {
+                alert('Seu cliente de email será aberto. Por favor, envie a mensagem para suporte@zapdobarbeiro.com.br');
+                form.reset();
+                btnEnviar.disabled = false;
+                btnTexto.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }, 500);
+            
+            /* 
+            ALTERNATIVA: Para usar EmailJS (envio direto sem abrir cliente de email):
+            
+            1. Criar conta em https://www.emailjs.com/ (plano gratuito disponível)
+            2. Configurar um serviço de email (Gmail, Outlook, etc.)
+            3. Criar um template de email
+            4. Substituir o código acima por:
+            
+            emailjs.init("YOUR_PUBLIC_KEY");
+            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+                from_name: nome,
+                from_email: email,
+                message: mensagem,
+                to_email: 'suporte@zapdobarbeiro.com.br'
+            }).then(() => {
+                alert('Mensagem enviada com sucesso! Retornaremos em breve.');
+                form.reset();
+                btnEnviar.disabled = false;
+                btnTexto.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }, (error) => {
+                alert('Erro ao enviar. Tente novamente ou envie diretamente para suporte@zapdobarbeiro.com.br');
+                btnEnviar.disabled = false;
+                btnTexto.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            });
+            */
         }
     </script>
 </body>
