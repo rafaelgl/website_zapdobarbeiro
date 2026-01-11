@@ -55,7 +55,7 @@
                         O sistema mais limpo e direto para gerir sua agenda. Deixe que seus clientes marquem horário em segundos, sem complicação ou mensagens infinitas.
                     </p>
                     <div class="mt-10 flex gap-4">
-                        <button onclick="showTab('barbeiros')" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:scale-105 transition">
+                        <button onclick="showTab('em-construcao')" class="bg-indigo-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-indigo-200 hover:scale-105 transition">
                             Agendar Agora
                         </button>
                         <button onclick="showTab('planos')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 transition">
@@ -191,6 +191,38 @@
                         <textarea placeholder="Como podemos ajudar?" rows="4" class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-indigo-500 transition"></textarea>
                         <button onclick="alert('Mensagem enviada! Retornaremos em breve.')" class="w-full bg-indigo-600 text-white p-4 rounded-2xl font-bold hover:bg-indigo-700 transition">Enviar Mensagem</button>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="em-construcao" class="tab-content pt-32 pb-20">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center">
+                    <div class="inline-block mb-8">
+                        <div class="relative">
+                            <div class="absolute -inset-4 bg-indigo-500/20 rounded-full blur-3xl animate-pulse"></div>
+                            <div class="relative bg-white dark:bg-slate-900 p-12 rounded-3xl shadow-2xl border-2 border-indigo-200 dark:border-indigo-800">
+                                <div class="text-6xl mb-6 animate-bounce">🚧</div>
+                                <h2 class="text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
+                                    EM CONSTRUÇÃO
+                                </h2>
+                                <p class="text-xl text-slate-600 dark:text-slate-400 mb-8">
+                                    Estamos trabalhando para trazer a melhor experiência de agendamento para você!
+                                </p>
+                                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                                    <button onclick="showTab('home')" class="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg">
+                                        Voltar ao Início
+                                    </button>
+                                    <button onclick="showTab('contato')" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-8 py-3 rounded-2xl font-bold hover:bg-slate-50 transition">
+                                        Fale Conosco
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-8">
+                        Em breve você poderá agendar seu horário diretamente pela plataforma
+                    </p>
                 </div>
             </div>
         </section>
