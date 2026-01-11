@@ -127,6 +127,31 @@ Após configurar:
 
 ---
 
+---
+
+## 🏢 Opção 3: EmailJS com SMTP da Hostinger (Recomendado se você tem email na Hostinger)
+
+Se você tem o email `suporte@zapdobarbeiro.com.br` hospedado na Hostinger, esta é a melhor opção!
+
+### Vantagens:
+- ✅ Usa seu próprio email da Hostinger
+- ✅ Sem limites de terceiros (além do plano do EmailJS)
+- ✅ Emails enviados diretamente do seu domínio
+- ✅ Mais profissional
+
+### Passo a Passo:
+Consulte o arquivo **`CONFIGURAR_EMAIL_HOSTINGER.md`** para instruções detalhadas.
+
+**Resumo rápido:**
+1. Obter credenciais SMTP da Hostinger (`smtp.hostinger.com`)
+2. Criar conta no EmailJS
+3. Configurar serviço SMTP customizado no EmailJS
+4. Criar template de email
+5. Configurar no código
+
+---
+
 ## 📝 Recomendação
 
-Para começar rapidamente, use **Formspree** (Opção 1). É mais simples e não requer configuração de servidor de email.
+- **Se você tem email na Hostinger:** Use **Opção 3** (EmailJS com SMTP da Hostinger) - Veja `CONFIGURAR_EMAIL_HOSTINGER.md`
+- **Se não tem email próprio:** Use **Formspree** (Opção 1) - Mais simples e rápido
