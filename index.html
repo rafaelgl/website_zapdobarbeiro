@@ -2206,36 +2206,9 @@
             filter: invert(1);
         }
 
-        /* ========== MELHORIAS BOTÃO "CONHECER PLANOS" ========== */
-        
-        /* Garantir contraste adequado do botão "Conhecer Planos" */
-        #btn-conhecer-planos,
-        button[onclick*="showTab('planos')"] {
-            color: #0f172a !important;
-            border-width: 2px !important;
-            border-color: #cbd5e1 !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+        /* ========== BOTÃO "EM CONSTRUÇÃO" (ex-Conhecer Planos) ========== */
+        #btn-conhecer-planos {
             font-weight: 700 !important;
-        }
-
-        html.dark #btn-conhecer-planos,
-        html.dark button[onclick*="showTab('planos')"] {
-            color: #ffffff !important;
-            background-color: #1e293b !important;
-            border-color: #475569 !important;
-        }
-
-        #btn-conhecer-planos:hover,
-        button[onclick*="showTab('planos')"]:hover {
-            border-color: #94a3b8 !important;
-            color: #0f172a !important;
-        }
-
-        html.dark #btn-conhecer-planos:hover,
-        html.dark button[onclick*="showTab('planos')"]:hover {
-            background-color: #334155 !important;
-            border-color: #64748b !important;
-            color: #ffffff !important;
         }
     </style>
 </head>
@@ -2272,9 +2245,9 @@
                     Encontre um Barbeiro
                 </a>
                 <span class="sidebar-public-only">
-                    <a href="#" onclick="navClick('login', event)" class="font-bold text-indigo-600 dark:text-indigo-400">
+                    <a href="#" onclick="avisoEmConstrucao(); closeSidebar(); return false;" class="font-bold text-amber-600 dark:text-amber-400">
                         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-                        Painel do Barbeiro
+                        Em construção
                     </a>
                 </span>
             </section>
@@ -2315,9 +2288,9 @@
                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Quem Somos
                 </a>
-                <a href="#" onclick="navClick('planos', event)">
+                <a href="#" onclick="avisoEmConstrucao(); closeSidebar(); return false;">
                     <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Planos
+                    Planos (em construção)
                 </a>
             </section>
             <section>
@@ -2357,9 +2330,9 @@
         </div>
         <div class="topbar-right flex-shrink-0">
             <div class="topbar-default-buttons">
-                <a href="#" onclick="navClick('login', event); return false;" class="bg-indigo-600 text-white px-3 py-2 rounded-xl text-sm font-semibold hover:bg-indigo-700 transition inline-flex items-center gap-1.5">
-                    <span aria-hidden="true">✂️</span>
-                    <span>Painel do Barbeiro</span>
+                <a href="#" onclick="avisoEmConstrucao(); return false;" class="bg-amber-500 text-white px-3 py-2 rounded-xl text-sm font-semibold hover:bg-amber-600 transition inline-flex items-center gap-1.5">
+                    <span aria-hidden="true">🔧</span>
+                    <span>Em construção</span>
                 </a>
             </div>
             <div class="topbar-admin-buttons">
@@ -2395,8 +2368,8 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             Agendar Agora
                         </button>
-                        <button id="btn-conhecer-planos" onclick="showTab('planos')" class="bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-indigo-400 dark:hover:border-slate-500 hover:shadow-xl transition-all min-h-[44px] shadow-lg">
-                            Conhecer Planos
+                        <button id="btn-conhecer-planos" onclick="avisoEmConstrucao(); return false;" class="bg-amber-500/90 dark:bg-amber-600/90 border-2 border-amber-600 dark:border-amber-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold hover:bg-amber-600 dark:hover:bg-amber-700 hover:border-amber-700 hover:shadow-xl transition-all min-h-[44px] shadow-lg">
+                            🔧 Em construção
                         </button>
                     </div>
                 </div>
@@ -2617,35 +2590,15 @@
 
         <section id="login" class="tab-content pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-20">
             <div class="max-w-md mx-auto px-4 sm:px-6 min-w-0">
-                <div class="bg-white dark:bg-slate-900 rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-                    <div class="flex items-center justify-center gap-3 p-6 sm:p-8 border-b-2 border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-50 to-white dark:from-slate-800/50 dark:to-slate-900">
-                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30 flex-shrink-0">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <div class="bg-white dark:bg-slate-900 rounded-3xl border-2 border-amber-200 dark:border-amber-800 shadow-2xl overflow-hidden">
+                    <div class="flex flex-col items-center justify-center gap-4 p-8 sm:p-10 text-center">
+                        <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/30 text-3xl">
+                            🔧
                         </div>
-                        <div class="text-left min-w-0">
-                            <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Painel do Barbeiro</h2>
-                            <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">Entre com suas credenciais</p>
-                        </div>
-                    </div>
-                    <div class="p-6 sm:p-8 space-y-5">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">E-mail</label>
-                            <input type="email" id="user" placeholder="seuemail@exemplo.com" class="w-full p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 transition">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-2">Senha</label>
-                            <input type="password" id="pass" placeholder="Sua senha" class="w-full p-4 rounded-xl border-2 border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 dark:focus:ring-indigo-900/50 transition">
-                        </div>
-                        <button onclick="fazerLogin(event)" class="w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold transition-all shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5 flex items-center justify-center gap-2 text-center touch-manipulation">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-                            Entrar no Painel
-                        </button>
-                        <p class="text-xs text-center text-slate-500 dark:text-slate-400">
-                            Use o e-mail e a senha cadastrados no sistema
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 dark:text-white">Estamos em construção</h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                            O Painel do Barbeiro e os planos estarão disponíveis em breve. Obrigado pela paciência!
                         </p>
-                        <div class="text-center pt-2">
-                            <a href="#" onclick="showTab('forgot-password', event)" class="text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition underline underline-offset-2">Esqueci minha senha</a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -3758,6 +3711,13 @@
             if (sun) sun.classList.toggle('hidden', !isDark);
             if (moon) moon.classList.toggle('hidden', isDark);
         })();
+
+        /**
+         * Exibe aviso de que a área está em construção (Planos / Painel do Barbeiro).
+         */
+        function avisoEmConstrucao() {
+            showToast('Estamos em construção. Em breve novidades!', 'info', 6000);
+        }
 
         /**
          * Sistema de notificação Toast melhorado
