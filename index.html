@@ -3726,9 +3726,6 @@
          * @param {number} duration - Duração em ms (padrão: 5000)
          */
         function showToast(message, type = 'info', duration = 5000) {
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:showToast:entry',message:'showToast called',data:{message,type,duration,hasBody:!!document.body},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_TOAST'})}).catch(()=>{});
-            // #endregion
             // Remover toasts anteriores
             const existingToasts = document.querySelectorAll('.toast-notification');
             existingToasts.forEach(t => t.remove());
@@ -3741,9 +3738,6 @@
                 container.style.cssText = 'position:fixed !important;top:20px !important;right:20px !important;z-index:999999 !important;max-width:400px !important;pointer-events:none !important;';
                 // Garantir que o container esteja no final do body para ficar acima de tudo
                 document.body.appendChild(container);
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:showToast:containerCreated',message:'toast container created',data:{containerId:container.id},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_TOAST'})}).catch(()=>{});
-                // #endregion
             } else {
                 // Se container já existe, garantir que está no final do body
                 if (container.parentElement !== document.body) {
@@ -3775,10 +3769,6 @@
             `;
             
             container.appendChild(toast);
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:showToast:toastAppended',message:'toast appended to DOM',data:{message,type,duration,hasParent:!!toast.parentElement,containerChildren:container.children.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_TOAST'})}).catch(()=>{});
-            // #endregion
-            
             // Forçar visibilidade imediatamente após inserção no DOM
             setTimeout(() => {
                 toast.style.transform = 'translateX(0)';
@@ -3988,13 +3978,7 @@
                     // Atualizar a grade do calendário só se o usuário não estiver atuando (modal aberto, arrastar, resize)
                     var deve = deveFazerRefreshAutomaticoCalendario();
                     var interacting = window.calendarManager && typeof window.calendarManager.isUserInteracting === 'function' && window.calendarManager.isUserInteracting();
-                    // #region agent log
-                    fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:pooling-calendar-refresh',message:'polling calendar guard',data:{deveFazer:deve,isUserInteracting:!!interacting,hasManager:!!window.calendarManager},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H1'})}).catch(()=>{});
-                    // #endregion
                     if (deve && window.calendarManager && typeof window.calendarManager.loadEvents === 'function') {
-                        // #region agent log
-                        fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:pooling-dispatch',message:'dispatching calendar:refresh from polling',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H5'})}).catch(()=>{});
-                        // #endregion
                         document.dispatchEvent(new CustomEvent('calendar:refresh'));
                     }
                 }
@@ -4007,16 +3991,10 @@
             for (var i = 0; i < modalIds.length; i++) {
                 var el = document.getElementById(modalIds[i]);
                 if (el && !el.classList.contains('hidden')) {
-                    // #region agent log
-                    fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:deveFazer-modal-open',message:'skip refresh: modal open',data:{modalId:modalIds[i]},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H2'})}).catch(()=>{});
-                    // #endregion
                     return false;
                 }
             }
             if (window.calendarManager && typeof window.calendarManager.isUserInteracting === 'function' && window.calendarManager.isUserInteracting()) {
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:deveFazer-interacting',message:'skip refresh: user interacting',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H3'})}).catch(()=>{});
-                // #endregion
                 return false;
             }
             if (calendarMouseOver) return false;
@@ -5678,9 +5656,6 @@
         // Lista mobile: eventos do dia (view='day') ou próximos 7 dias (view='agenda')
         function renderMobileAgendaList() {
             const list = document.getElementById('calendar-mobile-list');
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:renderMobileAgendaList:entry',message:'mobile agenda list render',data:{hasListElement:!!list,hasCalendarManager:!!window.calendarManager,hasState:!!(window.calendarManager?.state)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H3_H4'})}).catch(()=>{});
-            // #endregion
             if (!list || !window.calendarManager || !window.calendarManager.state) return;
             const state = window.calendarManager.state;
             
@@ -5740,10 +5715,6 @@
                 eventos = (state.events || []).filter(ev => ev.inicio >= start && ev.inicio <= end)
                     .sort((a, b) => a.inicio - b.inicio);
 
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:renderMobileAgendaList:eventos',message:'eventos filtered',data:{totalEvents:state.events?.length || 0,filteredCount:eventos.length,innerWidth:window.innerWidth,stateView:state.view},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H3_H4'})}).catch(()=>{});
-                // #endregion
-
                 title = day.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
                 html = `<div class="calendar-mobile-list-title">Agenda — ${title}</div>`;
 
@@ -5793,9 +5764,6 @@
                 updateCalendarDateDisplay();
             }, { passive: true });
 
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:attachCalendarSwipe',message:'calendar swipe attached',data:{innerWidth:window.innerWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H4'})}).catch(()=>{});
-            // #endregion
         }
 
         // Garante que o mobile list/strip seja atualizado após cada render
@@ -5810,9 +5778,6 @@
             };
             window.calendarManager._mobileHooked = true;
 
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:attachCalendarRenderHook',message:'render hook attached',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H4'})}).catch(()=>{});
-            // #endregion
         }
 
         function selecionarDia(data) {
@@ -6391,9 +6356,6 @@
         let agendamentoEdicaoId = null;
 
         window.openModalEditarAgendamento = async function(event) {
-            // #region agent log
-            fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:openModalEditarAgendamento',message:'modal editar opened',data:{hasEvent:!!event,eventId:event?.id,eventStatus:event?.status},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_MODAL'})}).catch(()=>{});
-            // #endregion
             if (!event || !event.id) return;
             agendamentoEdicaoId = event.id;
             const inicio = event.inicio ? new Date(event.inicio) : new Date();
@@ -6565,32 +6527,16 @@
                     servico_id: parseInt(servicoId, 10),
                     data_hora: dataHoraBrasilia.toISOString()
                 });
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:salvarNovoAgendamento:created',message:'appointment created successfully',data:{novoAgendamento,dataHoraBrasilia:dataHoraBrasilia.toISOString(),dataStr,horaStr},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_REFRESH'})}).catch(()=>{});
-                // #endregion
                 closeModalNovoAgendamento();
                 if (window.calendarManager && typeof window.calendarManager.loadEvents === 'function') {
-                    // #region agent log
-                    fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:salvarNovoAgendamento:beforeLoadEvents',message:'before loadEvents call',data:{view:window.calendarManager?.state?.view,currentDate:window.calendarManager?.state?.currentDate?.toISOString()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_REFRESH'})}).catch(()=>{});
-                    // #endregion
                     await window.calendarManager.loadEvents();
-                    // #region agent log
-                    fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:salvarNovoAgendamento:afterLoadEvents',message:'after loadEvents call',data:{eventsCount:window.calendarManager?.state?.events?.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_REFRESH'})}).catch(()=>{});
-                    // #endregion
                     if (typeof window.calendarManager.render === 'function') window.calendarManager.render();
                 }
                 if (typeof carregarProximosAgendamentos === 'function') carregarProximosAgendamentos();
                 showToast('Agendamento cadastrado com sucesso! ✓', 'success');
             } catch (err) {
                 console.error('Erro ao cadastrar agendamento:', err);
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:salvarNovoAgendamento:error',message:'error creating appointment',data:{error:err.message,errorStack:err.stack,errorName:err.name,errorString:String(err)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_ERROR_DISPLAY'})}).catch(()=>{});
-                // #endregion
                 let errorMsg = err.message || 'Erro desconhecido';
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:salvarNovoAgendamento:errorMsg',message:'error message extracted',data:{errorMsg,willShowToast:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_ERROR_DISPLAY'})}).catch(()=>{});
-                // #endregion
-                
                 // Limpar mensagens de erro anteriores no modal
                 const modal = document.getElementById('modal-novo-agendamento');
                 const existingError = modal?.querySelector('.erro-agendamento');
@@ -6634,9 +6580,6 @@
                     toastMessage = 'Erro ao cadastrar agendamento: ' + errorMsg;
                     showToast(toastMessage, 'error', 7000);
                 }
-                // #region agent log
-                fetch('http://127.0.0.1:7242/ingest/60ddab2c-5b81-4bdd-902c-5766ccbdb7cc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:salvarNovoAgendamento:afterToast',message:'after showToast call',data:{toastMessage,errorMsg},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'H_ERROR_DISPLAY'})}).catch(()=>{});
-                // #endregion
             } finally {
                 if (btn) { btn.disabled = false; btn.textContent = textoOriginal; }
             }
