@@ -1,70 +1,80 @@
 # Zap do Barbeiro - Website
 
-Website oficial do Zap do Barbeiro - O Assistente de Barbearia mais inteligente do mundo.
+Website oficial do **Zap do Barbeiro** — o assistente de barbearia mais inteligente do mundo.
+
+Site institucional estático, responsivo e preparado para publicação no GitHub Pages.
+
+---
 
 ## 🚀 Como hospedar no GitHub Pages
 
-### Opção 1: Usando o script PowerShell (Recomendado)
+### Opção 1: Script PowerShell (recomendado)
 
 1. Execute o script de configuração:
-```powershell
-.\setup-github.ps1
-```
 
-2. Siga as instruções na tela para conectar ao seu repositório GitHub
+   ```powershell
+   .\setup-github.ps1
+   ```
 
-3. Faça o push dos arquivos:
-```bash
-git push -u origin main
-```
+2. Siga as instruções na tela para conectar ao repositório no GitHub.
 
-### Opção 2: Configuração Manual
+3. Envie os arquivos para o remoto:
 
-1. **Crie o repositório no GitHub:**
+   ```bash
+   git push -u origin main
+   ```
+
+### Opção 2: Configuração manual
+
+1. **Crie o repositório no GitHub**
    - Acesse https://github.com/new
-   - Nome: `Website_Zapdobarbeiro` (ou outro nome de sua escolha)
-   - Público ou Privado
-   - Não inicialize com README, .gitignore ou license
+   - Nome sugerido: `Website_Zapdobarbeiro`
+   - Público ou privado
+   - Não marque README, .gitignore ou license
 
-2. **Conecte o repositório local ao GitHub:**
-```bash
-git remote add origin https://github.com/SEU-USUARIO/Website_Zapdobarbeiro.git
-git branch -M main
-git push -u origin main
-```
+2. **Conecte o repositório local ao GitHub**
 
-3. **Ative o GitHub Pages:**
-   - No GitHub, vá em **Settings** > **Pages**
-   - Em **Source**, selecione a branch **main** e a pasta **/ (root)**
-   - Clique em **Save**
+   ```bash
+   git remote add origin https://github.com/SEU-USUARIO/Website_Zapdobarbeiro.git
+   git branch -M main
+   git push -u origin main
+   ```
 
-4. **Aguarde alguns minutos** e seu site estará disponível em:
+3. **Ative o GitHub Pages**
+   - No repositório: **Settings** → **Pages**
+   - Em **Source**: branch **main**, pasta **/ (root)**
+   - Salve com **Save**
+
+4. Após alguns minutos, o site estará em:
    `https://SEU-USUARIO.github.io/Website_Zapdobarbeiro/`
 
-### Status Atual
+---
 
-✅ Repositório Git inicializado  
-✅ Arquivos commitados  
-✅ Branch renomeada para `main`  
-⏳ Aguardando conexão com GitHub remoto
-
-## 📁 Estrutura do Projeto
+## 📁 Estrutura do projeto
 
 ```
 Website_Zapdobarbeiro/
-├── index.html      # Página principal
-├── styles.css      # Estilos da página
-└── README.md       # Este arquivo
+├── index.html              # Página principal
+├── politica-privacidade.html
+├── termos-uso.html
+├── styles.css              # Estilos globais
+├── setup-github.ps1        # Script de configuração para GitHub
+├── .gitignore
+└── README.md
 ```
+
+---
 
 ## 🎨 Características
 
 - Design moderno e responsivo
 - Animações suaves
 - Gradiente de fundo atraente
-- Compatível com todos os dispositivos
+- Compatível com dispositivos móveis e desktop
+- Páginas de Política de Privacidade e Termos de Uso
+
+---
 
 ## 📝 Licença
 
-© 2024 Zap do Barbeiro. Todos os direitos reservados.
-
+© 2025 Zap do Barbeiro. Todos os direitos reservados.
